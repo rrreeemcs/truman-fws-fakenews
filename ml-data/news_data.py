@@ -59,8 +59,14 @@ def get_news_articles(topics):
         # If the request was not successful, print the status code
         else:
             print(f"Failed to fetch news for topic: {topic}, Status Code: {response.status_code}")
+
+    # Convert the list of dictionaries to a DataFrame
     return pd.DataFrame(all_articles)
 
-# Function to Store News Articles in Data Frame
-new_df = get_news_articles(list_topics)
-print(new_df.head())
+if __name__ == "__main__":
+    # Save the DataFrame to a CSV file
+    print("Fetching news articles...")
+    new_df = get_news_articles(list_topics)
+    print("Saving news articles to 'news_articles.csv'...")
+    new_df.to_csv("news_articles.csv", index=False)
+    print("News articles saved to 'news_articles.csv'.")
