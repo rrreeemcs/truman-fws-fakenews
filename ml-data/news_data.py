@@ -1,17 +1,66 @@
-# Using newsapi.org to fetch news data on different topics
+# Sameer Ramkissoon - News Data Fetching Script
+# Using newsapi.org to fetch (currently) 20 different news articles on various topics
+
+import requests
+import pprint
+import pandas as pd
+
 NEWS_API_KEY = "26451b16ac234ef4870541553c70048f"
+base_url = "https://newsapi.org/v2/everything"
 
-from newsapi import NewsApiClient
-import json
+# Topics can be adjusted depending on the focus of the news articles
+list_topics = ["business", "entertainment", "politics", "science", "technology"]
 
-newsapi = NewsApiClient(api_key=NEWS_API_KEY)
+# Function to Fetch News Articles
+def get_news_articles(topics):
+    """Goes through each topic and uses the News API to fetch articles.
+    Looks for everything in the US for each topic (gets 20 for each).
+    Performs a GET request to the News API for the following fields:
+    - Title
+    - Author
+    - Description
+    - Image URL
+    - Published At
+    - Content
 
-top_headlines = newsapi.get_top_headlines(
-    q="technology",
-    category="technology",
-    sources="bbc-news,cnn",
-    language="en",
-)
+    After fetching the articles, it creates a dictionary for each and stores in all_articles for proper storage as DataFrame.
+    """
 
-sources = newsapi.get_sources()
-print("Sources:", json.dumps(sources, indent=2))
+    all_articles = []
+    for topic in topics:
+        params = {
+            "apiKey": NEWS_API_KEY,
+            "q": topic,
+            "language": "en",
+            "sortBy": "relevancy",
+            "pageSize": 20,
+        }
+        
+        response = requests.get(base_url, params=params)
+        
+        # Check if the request was successful
+        print(f"Fetching news for topic: {topic.upper()}...")
+        if response.status_code == 200:
+            data = response.json()
+            articles = data.get("articles")
+            
+            # Making new dictionaries for each article then appending to all_articles
+            for article in articles:
+                new_dict = {}
+                new_dict['title'] = article.get('title', 'No Title')
+                new_dict['author'] = article.get('author', 'No Author')
+                new_dict['description'] = article.get('description', 'No Description')
+                new_dict['news_category'] = topic
+                new_dict['urlToImage'] = article.get('urlToImage', 'No Image URL')
+                new_dict['publishedAt'] = article.get('publishedAt', 'No Published Date')
+                new_dict['source_id'] = article['source'].get('name', 'No Source ID')
+
+                all_articles.append(new_dict)
+        # If the request was not successful, print the status code
+        else:
+            print(f"Failed to fetch news for topic: {topic}, Status Code: {response.status_code}")
+    return pd.DataFrame(all_articles)
+
+# Function to Store News Articles in Data Frame
+new_df = get_news_articles(list_topics)
+print(new_df.head())
