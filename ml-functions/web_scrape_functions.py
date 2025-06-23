@@ -1,13 +1,12 @@
-# Sameer Ramkissoon - Web Scraping Script
+# Sameer Ramkissoon - Web Scraping Functions
 # File used to store functions for web scraping news articles (done in scrape_sites.py)
 # Websites planned to scrape: theonion.com, babylonbee.com, beforeitsnews.com
 
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
+import json
 import time
 from urllib.parse import urljoin
-from datetime import datetime
 
 # Headers for the web scraping -> to avoid being blocked by the website
 headers = {
@@ -92,3 +91,200 @@ def get_news_image(soup, base_url):
                 return urljoin(base_url, image['src'])
         
     return 'No Image'
+
+# Functions that scrape the articles from the websites
+def scrape_theonion(limit = 30):
+    """
+    Scraping articles from theonion.com.
+    Returns a list of dictionaries containing the article details.
+    """
+    articles = []
+    base_url = 'https://www.theonion.com'
+
+    try:
+        response = session.get(base_url, timeout=10)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Finding the article links on the homepage
+        article_links = soup.find_all('a', href=True)
+        article_urls = []
+
+        # Goes through all of the links and checks type of article
+        # Once we reach the limit, stop adding articles
+        for link in article_links:
+            href = link.get('href')
+            if href and ('/c/' in href or '/news/' in href or '/politics/' in href):
+                full_url = urljoin(base_url, href)
+                if full_url not in article_urls:
+                    article_urls.append(full_url)
+                    if len(article_urls) >= limit:
+                        break
+
+        # Going through each article URL and scraping the details
+        for url in article_urls[:limit]:
+            try:
+                article_response = session.get(url, timeout=10)
+                article_soup = BeautifulSoup(article_response.content, 'html.parser')
+
+                title = grab_title(article_soup)
+                author = grab_author(article_soup)
+                description = grab_description(article_soup)
+                image_url = get_news_image(article_soup, base_url)
+
+                articles.append({
+                    'title': title,
+                    'author': author,
+                    'description': description,
+                    'news_category': 'satire',  # The Onion is a satire site
+                    'urlToImage': image_url,
+                    'publishedAt': None,  # The Onion does not provide a published date
+                    'source_id': 'theonion',
+                    'news_related': True
+                })
+                time.sleep(1)
+            except Exception as e:
+                print(f"Error scraping article {url}: {e}")
+                continue
+    except Exception as e:
+        print(f"Error scraping The Onion: {e}")
+    return articles
+
+def scrape_babylonbee(limit = 30):
+    """
+    Scraping articles from babylonbee.com.
+    Returns a list of dictionaries containing the article details.
+    """
+    articles = []
+    base_url = 'https://www.babylonbee.com'
+
+    try:
+        response = session.get(base_url, timeout=10)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Finding the article links on the homepage
+        article_links = soup.find_all('a', href=True)
+        article_urls = []
+
+        # Goes through all of the links and checks type of article
+        # Once we reach the limit, stop adding articles
+        for link in article_links:
+            href = link.get('href')
+            if href and ('/news/' in href or '/politics/' in href):
+                full_url = urljoin(base_url, href)
+                if full_url not in article_urls:
+                    article_urls.append(full_url)
+                    if len(article_urls) >= limit:
+                        break
+
+        # Going through each article URL and scraping the details
+        for url in article_urls[:limit]:
+            try:
+                article_response = session.get(url, timeout=10)
+                article_soup = BeautifulSoup(article_response.content, 'html.parser')
+
+                title = grab_title(article_soup)
+                author = grab_author(article_soup)
+                description = grab_description(article_soup)
+                image_url = get_news_image(article_soup, base_url)
+
+                articles.append({
+                    'title': title,
+                    'author': author,
+                    'description': description,
+                    'news_category': 'satire',  # BabylonBee is a satire site
+                    'urlToImage': image_url,
+                    'publishedAt': None,  # BabylonBee does not provide a published date
+                    'source_id': 'babylonbee',
+                    'news_related': True
+                })
+                time.sleep(1)
+            except Exception as e:
+                print(f"Error scraping article {url}: {e}")
+                continue
+    except Exception as e:
+        print(f"Error scraping BabylonBee: {e}")
+    return articles
+
+def scrape_beforeitsnews(limit = 30):
+    """
+    Scraping articles from beforeitsnews.com.
+    Returns a list of dictionaries containing the article details.
+    """
+    articles = []
+    base_url = 'https://www.beforeitsnews.com'
+
+    try:
+        response = session.get(base_url, timeout=10)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Finding the article links on the homepage
+        article_links = soup.find_all('a', href=True)
+        article_urls = []
+
+        # Goes through all of the links and checks type of article
+        # Once we reach the limit, stop adding articles
+        for link in article_links:
+            href = link.get('href')
+            if href and ('/story/' in href or '/politics/' in href):
+                full_url = urljoin(base_url, href)
+                if full_url not in article_urls:
+                    article_urls.append(full_url)
+                    if len(article_urls) >= limit:
+                        break
+
+        # Going through each article URL and scraping the details
+        for url in article_urls[:limit]:
+            try:
+                article_response = session.get(url, timeout=10)
+                article_soup = BeautifulSoup(article_response.content, 'html.parser')
+
+                title = grab_title(article_soup)
+                author = grab_author(article_soup)
+                description = grab_description(article_soup)
+                image_url = get_news_image(article_soup, base_url)
+
+                articles.append({
+                    'title': title,
+                    'author': author,
+                    'description': description,
+                    'news_category': 'satire',  # Before Its News is a satire site
+                    'urlToImage': image_url,
+                    'publishedAt': None,  # Before Its News does not provide a published date
+                    'source_id': 'beforeitsnews',
+                    'news_related': True
+                })
+                time.sleep(1)
+            except Exception as e:
+                print(f"Error scraping article {url}: {e}")
+                continue
+    except Exception as e:
+        print(f"Error scraping BeforeItsNews: {e}")
+    return articles
+
+# Executing scraping fucntions
+if __name__ == "__main__":
+    all_articles = []
+    print("Scraping articles...")
+
+    # The Onion
+    print("Scraping The Onion...")
+    onion_articles = scrape_theonion(limit=30)
+    all_articles.extend(onion_articles)
+    print(f"Scraped {len(onion_articles)} articles from The Onion.")
+
+    # Babylon Bee
+    print("Scraping Babylon Bee...")
+    bee_articles = scrape_babylonbee(limit=30)
+    all_articles.extend(bee_articles)
+    print(f"Scraped {len(bee_articles)} articles from Babylon Bee.")
+
+    # Before Its News
+    print("Scraping Before Its News...")
+    before_articles = scrape_beforeitsnews(limit=30)
+    all_articles.extend(before_articles)
+    print(f"Scraped {len(before_articles)} articles from Before Its News.")
+
+    # Saving the articles to a JSON file
+    with open('scraped_articles.json', 'w', encoding='utf-8') as f:
+        json.dump(all_articles, f, ensure_ascii=False, indent=4)
+    print("Articles saved to scraped_articles.json")
