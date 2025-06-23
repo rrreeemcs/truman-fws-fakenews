@@ -6,6 +6,16 @@ const _ = require('lodash');
 const dotenv = require('dotenv');
 dotenv.config({ path: '.env' }); // See the file .env.example for the structure of .env
 
+// Sameer Ramkissoon - Adding PostgreSQL Client to connect to truthtide_ml DB
+const { Pool } = require('pg');
+const pgPool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'truthtide_ml',
+    password: 'H0w1tzer1mpact', // Replace with your actual password
+    port: 5432, // Default PostgreSQL port
+});
+
 /**
  * GET /
  * Fetch and render newsfeed.
@@ -70,6 +80,7 @@ exports.getScript = async(req, res, next) => {
 /*
  * Post /post/new
  * Record a new user-made post. Include any actor replies (comments) that go along with it.
+ * UPDATED (Sameer Ramkissoon) - Any new post gets added to PSQL truthtide_ml database for ML purposes.
  */
 exports.newPost = async(req, res) => {
     try {
@@ -118,6 +129,19 @@ exports.newPost = async(req, res) => {
             }
             user.posts.unshift(post); // Add most recent user-made post to the beginning of the array
             await user.save();
+
+            // Start of PSQL Code to Insert New Post into truthtide_ml
+            try {
+                await pgPool.query(
+                    'INSERT INTO Posts (user_id, caption, image_url) VALUES ($1, $2, $3)',
+                    [user._id.toString(), post.body, req.file.filename]
+                );
+                console.log('New post inserted into truthtide_ml database successfully.');
+            } catch (pgErr) {
+                console.error('Error inserting new post into truthtide_ml database:', pgErr);
+            }
+            // End of PSQL Code
+
             res.redirect('/');
         } else {
             req.flash('errors', { msg: 'ERROR: Your post did not get sent. Please include a photo and a caption.' });
