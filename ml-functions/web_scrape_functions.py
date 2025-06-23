@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import time
+import pandas as pd
 from urllib.parse import urljoin
 
 # Headers for the web scraping -> to avoid being blocked by the website
@@ -149,7 +150,7 @@ def scrape_theonion(limit = 30):
         print(f"Error scraping The Onion: {e}")
     return articles
 
-def scrape_babylonbee(limit = 30):
+def scrape_babylonbee(limit = 50):
     """
     Scraping articles from babylonbee.com.
     Returns a list of dictionaries containing the article details.
@@ -267,10 +268,10 @@ if __name__ == "__main__":
     print("Scraping articles...")
 
     # The Onion
-    print("Scraping The Onion...")
-    onion_articles = scrape_theonion(limit=30)
-    all_articles.extend(onion_articles)
-    print(f"Scraped {len(onion_articles)} articles from The Onion.")
+    # print("Scraping The Onion...")
+    # onion_articles = scrape_theonion(limit=30)
+    # all_articles.extend(onion_articles)
+    # print(f"Scraped {len(onion_articles)} articles from The Onion.")
 
     # Babylon Bee
     print("Scraping Babylon Bee...")
@@ -279,12 +280,16 @@ if __name__ == "__main__":
     print(f"Scraped {len(bee_articles)} articles from Babylon Bee.")
 
     # Before Its News
-    print("Scraping Before Its News...")
-    before_articles = scrape_beforeitsnews(limit=30)
-    all_articles.extend(before_articles)
-    print(f"Scraped {len(before_articles)} articles from Before Its News.")
+    # print("Scraping Before Its News...")
+    # before_articles = scrape_beforeitsnews(limit=30)
+    # all_articles.extend(before_articles)
+    # print(f"Scraped {len(before_articles)} articles from Before Its News.")
 
     # Saving the articles to a JSON file
     with open('scraped_articles.json', 'w', encoding='utf-8') as f:
         json.dump(all_articles, f, ensure_ascii=False, indent=4)
     print("Articles saved to scraped_articles.json")
+
+    df = pd.read_json('scraped_articles.json')
+    df.to_csv('../input/scraped_articles.csv', index=False)
+    print(f"Converted to CSV")

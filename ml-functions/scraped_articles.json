@@ -1,25 +1,5 @@
 [
     {
-        "title": "Politics",
-        "author": "No Author",
-        "description": "No Description",
-        "news_category": "satire",
-        "urlToImage": "https://theonion.com/wp-content/uploads/2025/02/header-ad-1-img.png",
-        "publishedAt": null,
-        "source_id": "theonion",
-        "news_related": true
-    },
-    {
-        "title": "News",
-        "author": "No Author",
-        "description": "No Description",
-        "news_category": "satire",
-        "urlToImage": "https://theonion.com/wp-content/uploads/2025/02/header-ad-1-img.png",
-        "publishedAt": null,
-        "source_id": "theonion",
-        "news_related": true
-    },
-    {
         "title": "Report: Toby Keith Smiling Down From Heaven",
         "author": "No Author",
         "description": "HEAVEN — Sources confirmed that Toby Keith smiled his biggest grin today as he watched American B-2 bombers rain down bunker buster bombs on Iran.",
@@ -210,71 +190,71 @@
         "news_related": true
     },
     {
-        "title": "Nation's Democrats Reminisce About Pre-Kavanaugh Era When They Staunchly Defended Due Process",
+        "title": "Dave Ramsey Advises Trump To Use Snowball Method, Pay Off Smallest Legal Judgment First",
         "author": "No Author",
-        "description": "U.S.—Democrats across the land Wednesday took a moment to lightheartedly reminisce about “the good ol’ days” when they staunchly defended citizens against any perceived deprivation of due process by those in power, sources confirmed.",
+        "description": "NASHVILLE, TN — During a live radio call-in this morning, financial wellness authority Dave Ramsey advised use of his patented \"snowball method\" to help former President Trump pay down his approximately $470 million in legal judgments.",
         "news_category": "satire",
-        "urlToImage": "https://media.babylonbee.com/articles/article-3085.jpg",
+        "urlToImage": "https://media.babylonbee.com/articles/65d0fe9b531a665d0fe9b531a7.jpg",
         "publishedAt": null,
         "source_id": "babylonbee",
         "news_related": true
     },
     {
-        "title": "Man Wakes Up From Awesome Dream Where He Was On 'Jeopardy' And The Final Clue Was 'This Monkey-Lizard Creature Sat Next To Jabba The Hutt And Served As His Laughing Jester'",
+        "title": "Local Kid Beat Up On Church Playground For Carrying NIV",
         "author": "No Author",
-        "description": "EXCELSIOR SPRINGS, MO — An otherwise non-descript morning was made exponentially better for a local man today, as he woke up from an awesome dream in which he was on Jeopardy and the final clue was \"This monkey-lizard creature sat next to Jabba the Hutt and served as his laughing jester.\"",
+        "description": "DALLAS, TX—Local youngster Caleb Beckett brought his trusty NIV Bible For Boys to church Sunday, as he does every week. But this Sunday was different, as a classmate reportedly noticed for the first time that Beckett was using the NIV translation.",
         "news_category": "satire",
-        "urlToImage": "https://media.babylonbee.com/articles/66c7a4fda20f266c7a4fda20f4.jpg",
+        "urlToImage": "https://media.babylonbee.com/articles/article-506.jpg",
         "publishedAt": null,
         "source_id": "babylonbee",
         "news_related": true
     },
     {
-        "title": "Extremists On Left, Right Eliminate Each Other In Violent Clash, Nation's Problems Finally Over",
+        "title": "Democrats Issue Nationwide Fetterman Recall",
         "author": "No Author",
-        "description": "CHICAGO, IL—America celebrated today as violent extremists came together in a violent clash, killing each other and ending the nation’s problems for good. Extremist groups from the far left and far right heroically united in completely eliminating each other after a massive battle royale on a Chicago street. When the confrontation ended, in what some might call a miracle, not one survivor was left standing.",
+        "description": "U.S. — Despite holding a narrow lead in the Senate amid a hotly contested election year, Democrats have issued a nationwide Fetterman recall to address documented instances of malfunctions from the Pennsylvania senator.",
         "news_category": "satire",
-        "urlToImage": "https://media.babylonbee.com/articles/article-2127.jpg",
+        "urlToImage": "https://media.babylonbee.com/articles/66070d4136d3966070d4136d3a.jpg",
         "publishedAt": null,
         "source_id": "babylonbee",
         "news_related": true
     },
     {
-        "title": "Church Splits Over Bitter Keurig Vs. Traditional Brewer Debate",
+        "title": "José Altuve Tragically Stepped On During Rangers' Post-Game Celebration",
         "author": "No Author",
-        "description": "ELLENSBURG, WA—The Lord seemed to be blessing local church plant Koinonia Fellowship since its founding—but under the surface, dangerous rifts were deepening among church members, leading to an ugly, public split late last week.",
+        "description": "HOUSTON, TX — In a horrific yet tiny accident, Houston Astros second baseman José Altuve was accidentally stepped on as the Texas Rangers stormed the mound to celebrate making it to the World Series.",
         "news_category": "satire",
-        "urlToImage": "https://media.babylonbee.com/articles/article-852.jpg",
+        "urlToImage": "https://media.babylonbee.com/articles/653729f47a01f653729f47a020.jpg",
         "publishedAt": null,
         "source_id": "babylonbee",
         "news_related": true
     },
     {
-        "title": "Adult Coloring Book To Feature Favorite Imprecatory Psalms",
+        "title": "'My Name Is Peng Shuai And I Am Totally Fine,' Says Female Tennis Player Who Looks Suspiciously Like President Xi In A Skirt",
         "author": "No Author",
-        "description": "GRAND RAPIDS, MI—Featuring such favorite verses as “O God, break the teeth in their mouths,” and, “May his children be fatherless and his wife a widow,” Zondervan’s new Coloring the Imprecatory Psalms adult coloring book is set to be released this winter.",
+        "description": "BEIJING—Concerns have been raised about the whereabouts of Chinese tennis star Peng Shuai. But Chinese state officials have put these worries to rest by holding a press conference starring the women's tennis player, though many pointed out she looked \"suspiciously like President Xi Jinping in a wig, visor, and dress.\"",
         "news_category": "satire",
-        "urlToImage": "https://media.babylonbee.com/articles/article-139.jpg",
+        "urlToImage": "https://media.babylonbee.com/articles/article-9963-2.jpg",
         "publishedAt": null,
         "source_id": "babylonbee",
         "news_related": true
     },
     {
-        "title": "New Grand Theft Auto Game Will Have Unlockable ‘Soros DA Mode’ Where All Crime Is Legal",
+        "title": "The 14 Scariest Costumes From Halloween 2023",
         "author": "No Author",
-        "description": "NEW YORK, NY  — Rockstar Games has announced new details about its upcoming Grand Theft Auto installment, confirming that the new game will have an unlockable \"Soros DA Mode\" where all crime is legal.",
+        "description": "The Reese's cups have all been eaten and another Halloween is in the books — meaning it's time for The Babylon Bee's roundup of the scariest costumes we saw in 2023! Read on -- if you dare:",
         "news_category": "satire",
-        "urlToImage": "https://media.babylonbee.com/articles/654bd8e814fe0654bd8e814fe1.jpg",
+        "urlToImage": "https://media.babylonbee.com/articles/6542cb43b182e6542cb43b182f.jpg",
         "publishedAt": null,
         "source_id": "babylonbee",
         "news_related": true
     },
     {
-        "title": "Bible College To Provide Complimentary Wives To Unmarried Pastoral Graduates",
+        "title": "All This Talk About Bolivia Must Mean Something Is Happening In Either South America Or Eastern Europe",
         "author": "No Author",
-        "description": "CHICAGO, IL—For students at Moody Bible Institute in Chicago, the end of the spring semester means a mad dash for unmarried pastoral seniors to find a wife before graduation. While not technically a prerequisite for ministry, the school has an unwritten expectation that pastors will find a wife who will support them in ministry, and when possible write their sermons for them. However, with social distancing guidelines, students have been learning online and single pastoral majors have been unable to fulfill the “ring by spring” expectation.Administration at the school, nicknamed Moody “Bridal” Institute, is aware of the relationship issue and is taking matters into its own hands by assigning unmarried graduating pastoral majors a wife along with their degrees.“These are unprecedented times,” said MBI president Mark Jobe. “And we have to do everything in our power to give these men all that they need to succeed in ministry. That means a good wife. We can give them all the biblical education in the world, but I know from experience, if you don’t have a good wife, you’re not gonna make it.”A panel of faculty and staff will rank unmarried women based on their physical attractiveness and area of study. Wives will be assigned according to the single pastoral majors’ GPA and future ministry aspirations.“I definitely wish I would’ve studied a little harder,” said MBI senior Dan Anderson of his assigned wife. “Here’s hoping she has a great personality.”If successful, the school is considering implementing the policy permanently.",
+        "description": "U.S.—With lots of chatter about some sort of coup or protest or something in Bolivia, all indications are that something very big is happening in either South America or Eastern Europe.",
         "news_category": "satire",
-        "urlToImage": "https://media.babylonbee.com/articles/article-6184-2.jpg",
+        "urlToImage": "https://media.babylonbee.com/articles/article-5118-1.jpg",
         "publishedAt": null,
         "source_id": "babylonbee",
         "news_related": true
@@ -317,46 +297,6 @@
         "urlToImage": "https://media.babylonbee.com/articles/62bb34ba2e4f062bb34ba2e4f1.jpg",
         "publishedAt": null,
         "source_id": "babylonbee",
-        "news_related": true
-    },
-    {
-        "title": "Byington Bombshell Report: Blackout, False Flag EMPs, Engineered Plagues, Deep State Terror Confirmed. Be Prepared",
-        "author": "No Author",
-        "description": "Trump’s bombing of Iran Nuke facilities was not about Iran vs. Israel, but about Humanity vs. the Global Elite. Trump’s Continuity of Government Plan had aligned the US Space Force, Loyalists in Israel, Iranian intelligence, covert Russian patriots and the Global Military Alliance in one common cause: to make peace throughout the World. Iran’s Ayatollah was a Rothschild asset, installed to stage false flags, control oil and keep the region burning. Zionist Handlers were behind Qom’s secret Biolabs. Iran, Israel and US Inc. had been a fortress for Deep State assets for a very long time. Clinton, Obama, NATO generals, U.K. and MI6 were all tied to the Tehran-Russia-Vatican triangle. They were Child Sex Trafficking, money laundering US Taxpayer dollars, and psy-op command scripts that all routed through Fordow Iran – which had just been bombed to smithereens by Trump.",
-        "news_category": "satire",
-        "urlToImage": "https://img.youtube.com/vi/5PAc3krFyQA/hqdefault.jpg",
-        "publishedAt": null,
-        "source_id": "beforeitsnews",
-        "news_related": true
-    },
-    {
-        "title": "Byington Bombshell Report: While Trump Bombs Iran, He Activates Largest Military Campaign in History to Save Millions of Tortured Children",
-        "author": "No Author",
-        "description": "Yes. On Sun. 22 June 2025 headlines across the world resounded with President Trump’s bombing of Iranian Nuclear Facilities – a mission to save the World from Nuclear World War III. Though at the same, Trump was secretly executing another, perhaps even more important mission beneath the earth’s surface that has yet to make the headlines: saving millions of children from torture and murder by Satan Worshipping Deep State Elites.",
-        "news_category": "satire",
-        "urlToImage": "https://beforeitsnews.com/contributor/upload/243590/profile/bf59daf7232dbbe139913481428ee1839d0f597c.jpeg",
-        "publishedAt": null,
-        "source_id": "beforeitsnews",
-        "news_related": true
-    },
-    {
-        "title": "US Bombs Iran Nuclear Sites - World War 3 or World Peace?",
-        "author": "No Author",
-        "description": "US Bombs Iran Nuclear Sites - World War 3 or World Peace? President Trump sent 3 B-2 bombers to take out 3 Iranian nuclear enrichment sites",
-        "news_category": "satire",
-        "urlToImage": "https://img.youtube.com/vi/RclC4m7l6T8/hqdefault.jpg",
-        "publishedAt": null,
-        "source_id": "beforeitsnews",
-        "news_related": true
-    },
-    {
-        "title": "Trump: I've Had Enough of Iran - Next Week Will Be Exciting",
-        "author": "No Author",
-        "description": "President Trump: I've Had Enough of Iran - Next Week Will Be Exciting - Pray Trump makes the right decisions that Susie Willes (Betty Boop) does not withhold any information from him",
-        "news_category": "satire",
-        "urlToImage": "https://img.youtube.com/vi/abEfFtD68lE/hqdefault.jpg",
-        "publishedAt": null,
-        "source_id": "beforeitsnews",
         "news_related": true
     }
 ]
