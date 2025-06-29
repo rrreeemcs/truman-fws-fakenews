@@ -15,8 +15,6 @@ const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const schedule = require('node-schedule');
-const scriptController = require('./controllers/script');
-app.post('/ml-analysis', scriptController.mlAnalysis); // Add this route to handle ML analysis requests
 const multer = require('multer');
 const fs = require('fs');
 const util = require('util');
