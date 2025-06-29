@@ -34,7 +34,7 @@ def get_news_articles(topics):
             "q": topic,
             "language": "en",
             "sortBy": "relevancy",
-            "pageSize": 25,
+            "pageSize": 20,
         }
         
         response = requests.get(base_url, params=params)

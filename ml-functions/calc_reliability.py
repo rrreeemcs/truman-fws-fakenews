@@ -7,7 +7,8 @@ from datetime import datetime, timedelta
 import re
 
 # Reading the news articles data
-df = pd.read_csv('../ml-data/news_articles.csv')
+filename = input("Enter the path to the news articles CSV file: ")
+df = pd.read_csv(f'../ml-data/{filename}.csv')
 
 # Calculating the reliability of each news article (manually)
 def calculate_reliability(row):
@@ -52,6 +53,8 @@ def calculate_reliability(row):
         # Tier 5: Not as established
         'Slashdot.org': 14,
         'Yahoo Entertainment': 8,
+        'BabylonBee': 7,
+        'TheOnion': 6,
         '': 5  # Missing source
     }
 
@@ -144,5 +147,5 @@ def reliability_label(score):
         return 'Unreliable'
 df['reliability_label'] = df['reliability_score'].apply(reliability_label)
 
-df.to_csv('../ml-data/news_articles_with_reliability.csv', index=False)
-print("Reliability scores calculated and saved to 'news_articles_with_reliability.csv'.")
+df.to_csv(f'../ml-data/{filename}_with_reliability.csv', index=False)
+print(f"Reliability scores calculated and saved to '{filename}_with_reliability.csv'.")
