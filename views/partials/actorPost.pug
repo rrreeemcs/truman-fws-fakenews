@@ -20,7 +20,7 @@
       img(src='/public/picture.svg', data-src=cdn+"/post_pictures/"+val.picture, style="max-width:100%; width:100%;")
     .description=val.body
     .myTimer.hidden 0
-  .ui.bottom.three.attached.icon.buttons
+  .ui.bottom.four.attacahed.icon.buttons
     .ui.reply.button(tabindex='0')
       i.reply.icon
       |  Reply
@@ -32,6 +32,10 @@
         i.heart.icon
         |  Like
       a.ui.basic.red.left.pointing.label.count=val.likes
+    //- ML Analysis button
+    .ui.ml-analysis.button(tabindex='0')
+      i.robot.icon
+      |  ML Analysis
   if val.comments.length > 0
     .content
       .ui.comments

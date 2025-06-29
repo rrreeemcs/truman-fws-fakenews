@@ -12,7 +12,7 @@
     img(src='/user_post/'+val.picture)
   .content
     .description=val.body
-  .two.ui.bottom.attached.icon.buttons
+  .three.ui.bottom.attached.icon.buttons
     .ui.reply.button(tabindex='0')
       i.reply.icon
       |  Reply
@@ -20,7 +20,11 @@
       .ui.like.button(class=val.liked ? "red" : null)
         i.heart.icon
         |  Like
-      a.ui.basic.red.left.pointing.label.count=val.likes+(val.liked ? 1 : 0)      
+      a.ui.basic.red.left.pointing.label.count=val.likes+(val.liked ? 1 : 0)  
+    //- ML Analysis button
+    .ui.ml-analysis.button(tabindex='0')
+      i.robot.icon
+      |  ML Analysis    
   if val.comments.length > 0
     .content
       .ui.comments

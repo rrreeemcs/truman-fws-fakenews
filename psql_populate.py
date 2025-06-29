@@ -7,7 +7,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 HOST = "localhost"
 PORT = "5432"
 USER = "postgres"
-PASSWORD = "H0w1tzer1mpact"
+PASSWORD = input("Password: ")
 DB_NAME = "truthtide_ml"
 
 def create_database():
@@ -48,13 +48,15 @@ def create_database():
             CREATE TABLE IF NOT EXISTS Articles (
                 article_id SERIAL PRIMARY KEY,
                 title TEXT NOT NULL,
-                author TEXT NOT NULL,
-                description TEXT NOT NULL,
+                author TEXT,
+                description TEXT,
                 news_category TEXT,
                 image_url TEXT,
                 publishedAt TIMESTAMP,
                 source_id TEXT NOT NULL,
-                news_related BOOLEAN NOT NULL DEFAULT FALSE
+                news_related BOOLEAN NOT NULL DEFAULT FALSE,
+                reliability_score INT DEFAULT 0,
+                reliability_label TEXT DEFAULT 'Unknown'
             );
         """)
         print("Table 'Articles' created successfully.")
@@ -95,15 +97,9 @@ def add_articles():
         print("Adding articles to the 'Articles' table...")
 
         # Use copy_expert to avoid server-side file permission issues
-        with open('C:/Users/ramsa/Desktop/NYIT/FWS/truthtide-fws/input/news_articles.csv', 'r', encoding='utf-8') as f:
+        with open('C:/Users/ramsa/Desktop/NYIT/FWS/truthtide-fws/ml-data/all_articles.csv', 'r', encoding='utf-8') as f:
             cursor.copy_expert("""
-                COPY Articles(title, author, description, news_category, image_url, publishedat, source_id, news_related)
-                FROM STDIN WITH (FORMAT CSV, HEADER TRUE, DELIMITER ',')
-            """, f)
-
-        with open('C:/Users/ramsa/Desktop/NYIT/FWS/truthtide-fws/input/scraped_articles.csv', 'r', encoding='utf-8') as f:
-            cursor.copy_expert("""
-                COPY Articles(title, author, description, news_category, image_url, publishedat, source_id, news_related)
+                COPY Articles(title, author, description, news_category, image_url, publishedat, source_id, news_related, reliability_score, reliability_label)
                 FROM STDIN WITH (FORMAT CSV, HEADER TRUE, DELIMITER ',')
             """, f)
 
