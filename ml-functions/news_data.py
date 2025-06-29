@@ -9,7 +9,7 @@ NEWS_API_KEY = "26451b16ac234ef4870541553c70048f"
 base_url = "https://newsapi.org/v2/everything"
 
 # Topics can be adjusted depending on the focus of the news articles
-list_topics = ["business", "entertainment", "politics", "science", "technology"]
+list_topics = ["business", "politics"]
 
 # Function to Fetch News Articles
 def get_news_articles(topics):
@@ -33,7 +33,7 @@ def get_news_articles(topics):
             "q": topic,
             "language": "en",
             "sortBy": "relevancy",
-            "pageSize": 20,
+            "pageSize": 25,
         }
         
         response = requests.get(base_url, params=params)
