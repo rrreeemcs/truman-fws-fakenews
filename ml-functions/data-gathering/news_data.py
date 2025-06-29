@@ -70,8 +70,8 @@ if __name__ == "__main__":
     new_df = get_news_articles(list_topics)
     print("Saving news articles to 'news_articles.csv'...")
 
-    # Always save relative to the script's directory
+    # Saving in the correct location
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    output_path = os.path.join(script_dir, '..', 'ml-data', 'news_articles.csv')
+    output_path = os.path.join(script_dir, '..', '..', 'ml-data', 'pre-processed', 'news_articles.csv')
     new_df.to_csv(output_path, index=False)
     print(f"News articles saved to '{output_path}'.")

@@ -1,6 +1,8 @@
+# Sameer Ramkissoon - Babylon Bee Scraping Script
+# Scraping data from Babylon Bee homepage for articles (gets around 20-30)
+
 import requests
 from bs4 import BeautifulSoup
-import json
 import csv
 from datetime import datetime
 import re
@@ -8,7 +10,8 @@ import time
 
 def scrape_babylon_bee():
     """
-    Scrape The Babylon Bee for article data
+    Main function used to scrape Babylon Bee homepage for articles.
+    Gathers the same fields as NewsAPI (if possible): title, author, description, news_category, urlToImage, publishedAt, source_id, news_related. 
     """
     
     # Headers to mimic a real browser request
@@ -22,6 +25,7 @@ def scrape_babylon_bee():
     
     url = 'https://babylonbee.com'
     
+    # Check if the URL is reachable
     try:
         print(f"Fetching {url}...")
         response = requests.get(url, headers=headers, timeout=10)
@@ -48,14 +52,14 @@ def scrape_babylon_bee():
         
         found_articles = []
         
-        # Try different selectors to find articles
+        # Using the list of article selectors to try and find articles on the homepage
         for selector in article_selectors:
             elements = soup.select(selector)
             if elements:
                 found_articles.extend(elements)
                 print(f"Found {len(elements)} articles with selector: {selector}")
         
-        # Also try finding articles by looking for headline links
+        # Using additional logic to find article links in headlines ('a' and href attributes)
         headline_links = soup.find_all('a', href=True)
         article_links = []
         
@@ -64,23 +68,21 @@ def scrape_babylon_bee():
             # Look for article URLs (typically contain year/month or article path)
             if (('babylonbee.com' in href or href.startswith('/')) and 
                 any(indicator in href.lower() for indicator in ['/news/', '/202', '/article', '/story']) and
-                len(link.get_text(strip=True)) > 10):  # Ensure it has substantial text
+                len(link.get_text(strip=True)) > 10):
                 article_links.append(link)
         
-        print(f"Found {len(article_links)} potential article links")
-        
-        # Remove duplicates by converting to set using article links
+        # With article elements and links, we need to ensure uniqueness hence using a set()
         unique_articles = []
         seen_links = set()
         
-        # Process found article elements
+        # Adding the found articles to the unique_articles list
         for article in found_articles:
             link_elem = article.find('a', href=True)
             if link_elem and link_elem['href'] not in seen_links:
                 unique_articles.append(article)
                 seen_links.add(link_elem['href'])
         
-        # Process standalone article links
+        # Also accounting for pseudo articles (linked without all of the article elements)
         for link in article_links:
             if link['href'] not in seen_links:
                 # Create a pseudo-article element from the link
@@ -91,6 +93,7 @@ def scrape_babylon_bee():
         
         print(f"Processing {len(unique_articles)} unique articles...")
         
+        # Getting the title of each article and appending the data of the article to the articles list
         for article in unique_articles:
             try:
                 article_data = extract_article_data(article, headers)
@@ -98,7 +101,7 @@ def scrape_babylon_bee():
                     articles.append(article_data)
                     print(f"Extracted: {article_data['title'][:50]}...")
                     
-                # Be respectful - add small delay
+                # Small delay between extractions
                 time.sleep(0.5)
                 
             except Exception as e:
@@ -116,7 +119,7 @@ def scrape_babylon_bee():
 
 def extract_article_data(article_elem, headers):
     """
-    Extract data from individual article element
+    Function used to extract the desired information from the articles.
     """
     
     # Initialize article data with default values
@@ -167,7 +170,7 @@ def extract_article_data(article_elem, headers):
         author_elem = article_elem.select_one(selector)
         if author_elem:
             author_text = author_elem.get_text(strip=True)
-            # Clean up author text (remove "By" prefix if present)
+            # Clean up author text (remove "By" prefix if present) using regex expressions
             author_text = re.sub(r'^(by|author:?)\s*', '', author_text, flags=re.IGNORECASE)
             if author_text:
                 article_data['author'] = author_text
@@ -185,7 +188,7 @@ def extract_article_data(article_elem, headers):
         desc_elem = article_elem.select_one(selector)
         if desc_elem:
             desc_text = desc_elem.get_text(strip=True)
-            # Skip if it's too short or looks like metadata
+            # Do not use anything too short or similar to metadata (social media links)
             if len(desc_text) > 30 and not any(skip_word in desc_text.lower() 
                                              for skip_word in ['share', 'tweet', 'facebook', 'subscribe']):
                 article_data['description'] = desc_text[:200] + '...' if len(desc_text) > 200 else desc_text
@@ -203,7 +206,7 @@ def extract_article_data(article_elem, headers):
                       img_elem.get('data-original'))
             
             if img_src and not any(skip in img_src.lower() for skip in ['logo', 'icon', 'avatar']):
-                # Handle relative URLs
+                # Creating the proper URL if it is relative
                 if img_src.startswith('//'):
                     img_src = 'https:' + img_src
                 elif img_src.startswith('/'):
@@ -234,7 +237,7 @@ def extract_article_data(article_elem, headers):
                     article_data['publishedAt'] = parsed_date
                     break
     
-    # If still no date, try to extract from URL or use current date
+    # Another chance to grab data from the article link if no date was found previously
     if not article_data['publishedAt']:
         link_elem = article_elem.find('a', href=True)
         if link_elem:
@@ -261,7 +264,7 @@ def extract_article_data(article_elem, headers):
 
 def parse_date(date_str):
     """
-    Parse various date formats and return ISO format
+    Cleaning up the date to properly match how we have it in the database (ISO Format).
     """
     try:
         # Clean the date string
@@ -300,9 +303,9 @@ def parse_date(date_str):
     except Exception:
         return None
 
-def save_to_csv(articles, filename='../ml-data/babylon_articles.csv'):
+def save_to_csv(articles, filename='../../ml-data/pre-processed/babylon_articles.csv'):
     """
-    Save articles to CSV file
+    Save articles to CSV file located in ml-data/pre-processed directory.
     """
     try:
         if not articles:
@@ -334,25 +337,6 @@ def save_to_csv(articles, filename='../ml-data/babylon_articles.csv'):
     except Exception as e:
         print(f"Error saving to CSV: {e}")
 
-def print_articles(articles):
-    """
-    Print articles in a readable format
-    """
-    print(f"\n{'='*60}")
-    print(f"SCRAPED {len(articles)} ARTICLES FROM THE BABYLON BEE")
-    print(f"{'='*60}")
-    
-    for i, article in enumerate(articles, 1):
-        print(f"\n--- Article {i} ---")
-        print(f"Title: {article['title']}")
-        print(f"Author: {article['author']}")
-        print(f"Description: {article['description'][:100]}...")
-        print(f"Category: {article['news_category']}")
-        print(f"Image URL: {article['urlToImage']}")
-        print(f"Published: {article['publishedAt']}")
-        print(f"Source: {article['source_id']}")
-        print(f"News Related: {article['news_related']}")
-
 # Main execution
 if __name__ == "__main__":
     print("Starting The Babylon Bee Scraper...")
@@ -361,16 +345,11 @@ if __name__ == "__main__":
     articles = scrape_babylon_bee()
     
     if articles:
-        # Display results
-        print_articles(articles)
-        
-        # Save to CSV file
+        # Save to the designated CSV File
         save_to_csv(articles)
         
-        # Print summary
-        print(f"\n✅ Successfully scraped {len(articles)} articles!")
-        print("Data saved to 'babylon_articles.csv'")
-        
+        # Show number of articles scraped
+        print(f"\nSuccessfully scraped {len(articles)} articles.")
+        print("Data saved to 'ml-data/pre-processed/babylon_articles.csv'") 
     else:
-        print("❌ No articles were scraped. The website structure may have changed.")
-        print("You may need to inspect the HTML and update the selectors.")
+        print("No articles were scraped. The website structure may have changed.")

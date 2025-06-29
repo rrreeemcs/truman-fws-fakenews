@@ -111,7 +111,7 @@ def add_articles():
     except Exception as e:
         print(f"Error adding articles: {e}")
 
-# Run ONLY AFTER ml-functions have been run
+# Run this script to create the database and add articles
 if __name__ == "__main__":
     create_database()
     add_articles()

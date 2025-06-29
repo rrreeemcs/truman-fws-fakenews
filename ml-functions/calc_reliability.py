@@ -8,16 +8,18 @@ import re
 
 # Reading the news articles data
 filename = input("Enter the path to the news articles CSV file: ")
-df = pd.read_csv(f'../ml-data/{filename}.csv')
+df = pd.read_csv(f'../ml-data/pre-processed/{filename}.csv')
 
-# Calculating the reliability of each news article (manually)
+# Calculating the reliability of each news article
 def calculate_reliability(row):
-    """Calculates a reliability score (0-100) based on the following criteria:
+    """
+    Calculates a reliability score (0-100) based on the following criteria:
     - Source credibility (most weight)
     - Author presence in the article
     - Age of the article
     - Description
     - URL Structure for Image
+    The numbered scores are assigned manually. Using the Hugging Face model created some severe issues when it came to simulating a pipeline for reliability scores.
     """
     score = 0
 
@@ -147,5 +149,5 @@ def reliability_label(score):
         return 'Unreliable'
 df['reliability_label'] = df['reliability_score'].apply(reliability_label)
 
-df.to_csv(f'../ml-data/{filename}_with_reliability.csv', index=False)
-print(f"Reliability scores calculated and saved to '{filename}_with_reliability.csv'.")
+df.to_csv(f'../ml-data/reliabile-score-version/{filename}_with_reliability.csv', index=False)
+print(f"Reliability scores calculated and saved to '/ml-data/reliabile-score-version/{filename}_with_reliability.csv'.")

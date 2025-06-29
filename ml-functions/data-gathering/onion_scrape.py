@@ -1,6 +1,9 @@
+# Sameer Ramkissoon - The Onion Scraping Script
+# Scraping data from TheOnion Politics page for articles (gets around 20-30)
+# Follows the same structure as babylonbee_scrape.py
+
 import requests
 from bs4 import BeautifulSoup
-import json
 import csv
 from datetime import datetime
 import re
@@ -8,7 +11,9 @@ import time
 
 def scrape_onion_politics():
     """
-    Scrape The Onion politics section for article data
+    Main function used to scrape The Onion politics page for articles.
+    Gathers the same fields as NewsAPI (if possible): title, author, description, news_category, urlToImage, publishedAt, source_id, news_related. 
+    NOTE: Description is not always available, and author may not be present for all articles (some of the articles are just title and image)
     """
     
     # Headers to mimic a real browser request
@@ -49,7 +54,7 @@ def scrape_onion_politics():
                 found_articles.extend(elements)
                 print(f"Found {len(elements)} articles with selector: {selector}")
         
-        # Remove duplicates by converting to set using article links
+        # Using a set once again to remove any duplicates (unique articles)
         unique_articles = []
         seen_links = set()
         
@@ -86,7 +91,7 @@ def scrape_onion_politics():
 
 def extract_article_data(article_elem, headers):
     """
-    Extract data from individual article element
+    Extracting the data from each article element.
     """
     
     # Initialize article data with default values
@@ -173,7 +178,7 @@ def extract_article_data(article_elem, headers):
 
 def parse_date(date_str):
     """
-    Parse various date formats and return ISO format
+    Parse various date formats to make suitable for PSQL ISO format
     """
     try:
         # Common date patterns
@@ -189,7 +194,7 @@ def parse_date(date_str):
             '%d/%m/%Y'
         ]
         
-        # Clean the date string
+        # Clean the date string using regex expressions
         date_str = re.sub(r'[^\w\s\-:./,]', '', date_str).strip()
         
         for pattern in patterns:
@@ -205,9 +210,9 @@ def parse_date(date_str):
     except Exception:
         return datetime.now().isoformat()
 
-def save_to_csv(articles, filename='../ml-data/onion_articles.csv'):
+def save_to_csv(articles, filename='../../ml-data/pre-processed/onion_articles.csv'):
     """
-    Save articles to CSV file
+    Save articles to CSV file located in ml-data/pre-processed directory.
     """
     try:
         if not articles:
@@ -239,25 +244,6 @@ def save_to_csv(articles, filename='../ml-data/onion_articles.csv'):
     except Exception as e:
         print(f"Error saving to CSV: {e}")
 
-def print_articles(articles):
-    """
-    Print articles in a readable format
-    """
-    print(f"\n{'='*60}")
-    print(f"SCRAPED {len(articles)} ARTICLES FROM THE ONION POLITICS")
-    print(f"{'='*60}")
-    
-    for i, article in enumerate(articles, 1):
-        print(f"\n--- Article {i} ---")
-        print(f"Title: {article['title']}")
-        print(f"Author: {article['author']}")
-        print(f"Description: {article['description'][:100]}...")
-        print(f"Category: {article['news_category']}")
-        print(f"Image URL: {article['urlToImage']}")
-        print(f"Published: {article['publishedAt']}")
-        print(f"Source: {article['source_id']}")
-        print(f"News Related: {article['news_related']}")
-
 # Main execution
 if __name__ == "__main__":
     print("Starting The Onion Politics Scraper...")
@@ -266,16 +252,12 @@ if __name__ == "__main__":
     articles = scrape_onion_politics()
     
     if articles:
-        # Display results
-        print_articles(articles)
-        
-        # Save to CSV file
+        # Save to CSV file -> sent to ml-data/pre-processed directory
         save_to_csv(articles)
         
         # Print summary
-        print(f"\n✅ Successfully scraped {len(articles)} articles!")
+        print(f"\nSuccessfully scraped {len(articles)} articles!")
         print("Data saved to 'onion_articles.csv'")
         
     else:
-        print("❌ No articles were scraped. The website structure may have changed.")
-        print("You may need to inspect the HTML and update the selectors.")
+        print("No articles were scraped. The website structure may have changed.")
