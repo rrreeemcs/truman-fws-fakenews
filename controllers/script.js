@@ -4,6 +4,7 @@ const Notification = require('../models/Notification');
 const helpers = require('./helpers');
 const _ = require('lodash');
 const dotenv = require('dotenv');
+const { spawn } = require('child_process');
 dotenv.config({ path: '.env' }); // See the file .env.example for the structure of .env
 
 // Sameer Ramkissoon - Adding PostgreSQL Client to connect to truthtide_ml DB
@@ -349,3 +350,22 @@ exports.postUpdateUserPostFeedAction = async(req, res, next) => {
         next(err);
     }
 }
+
+/**
+ * ML-Analysis
+ */
+
+exports.mlAnalysis = (req, res) => {
+    const { title, image_url } = req.body;
+    const py = spawn('python', [
+        'ml-functions/news_score_model.py',
+        '--title', title,
+        '--image_url', image_url
+    ]);
+    let output = '';
+    py.stdout.on('data', data => output += data);
+    py.stderr.on('data', data => console.error(data.toString()));
+    py.on('close', () => {
+        res.json({ score: parseFloat(output) });
+    });
+}; 
