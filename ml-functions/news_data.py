@@ -4,12 +4,13 @@
 import requests
 import pprint
 import pandas as pd
+import os
 
 NEWS_API_KEY = "26451b16ac234ef4870541553c70048f"
 base_url = "https://newsapi.org/v2/everything"
 
 # Topics can be adjusted depending on the focus of the news articles
-list_topics = ["business", "politics"]
+list_topics = ["business", "politics", "entertainment", "technology"]
 
 # Function to Fetch News Articles
 def get_news_articles(topics):
@@ -33,7 +34,7 @@ def get_news_articles(topics):
             "q": topic,
             "language": "en",
             "sortBy": "relevancy",
-            "pageSize": 25,
+            "pageSize": 20,
         }
         
         response = requests.get(base_url, params=params)
@@ -54,6 +55,7 @@ def get_news_articles(topics):
                 new_dict['urlToImage'] = article.get('urlToImage', 'No Image URL')
                 new_dict['publishedAt'] = article.get('publishedAt', 'No Published Date')
                 new_dict['source_id'] = article['source'].get('name', 'No Source ID')
+                new_dict['news_related'] = 1
 
                 all_articles.append(new_dict)
         # If the request was not successful, print the status code
@@ -64,9 +66,12 @@ def get_news_articles(topics):
     return pd.DataFrame(all_articles)
 
 if __name__ == "__main__":
-    # Save the DataFrame to a CSV file
     print("Fetching news articles...")
     new_df = get_news_articles(list_topics)
     print("Saving news articles to 'news_articles.csv'...")
-    new_df.to_csv("news_articles.csv", index=False)
-    print("News articles saved to 'news_articles.csv'.")
+
+    # Always save relative to the script's directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    output_path = os.path.join(script_dir, '..', 'ml-data', 'news_articles.csv')
+    new_df.to_csv(output_path, index=False)
+    print(f"News articles saved to '{output_path}'.")
