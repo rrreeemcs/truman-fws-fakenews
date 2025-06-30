@@ -2,12 +2,13 @@
 # Recreating the PSQL Database for Future Users to Continue Development 
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+import os
 
 # Database connection parameters
 HOST = "localhost"
 PORT = "5432"
 USER = "postgres"
-PASSWORD = input("Password: ")
+PASSWORD = os.environ.get("PGPASSWORD")  # Ensure you set this environment variable before running the script
 DB_NAME = "truthtide_ml"
 
 def create_database():
