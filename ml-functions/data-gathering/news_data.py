@@ -6,7 +6,7 @@ import pprint
 import pandas as pd
 import os
 
-NEWS_API_KEY = "26451b16ac234ef4870541553c70048f"
+NEWS_API_KEY = os.environ.get("NEWS_API_KEY")  # Ensure you set this environment variable before running the script
 base_url = "https://newsapi.org/v2/everything"
 
 # Topics can be adjusted depending on the focus of the news articles
